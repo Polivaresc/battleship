@@ -19,9 +19,6 @@ function shipFactory (initial_pos, final_pos) {
 }
 
 
-
-
-
 function calculateLength(initial_pos, final_pos) {
     const start = initial_pos.split('')
     const end = final_pos.split('')
