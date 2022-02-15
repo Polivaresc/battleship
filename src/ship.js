@@ -15,7 +15,7 @@ function shipFactory (initial_pos, final_pos) {
         return notHitPositions.length === 0
     }
 
-    return { len, hitPositions, isSunk, hit }
+    return { len, hitPositions, allPositions, isSunk, hit }
 }
 
 

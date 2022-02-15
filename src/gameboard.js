@@ -12,10 +12,47 @@ function gameboardFactory (rows, cols) {
         }
     }
 
-    console.log(matrix)
-    return {size, rows, colsNum}
+    const allShips = []
+
+    return { size, rows, colsNum, matrix, allShips }
+}
+
+function addShip(newShip, gameboard) {
+    let splitPosition
+    for (p of newShip.allPositions) {
+        splitPosition = p.split('')
+        const shipLetter = splitPosition[0]
+        const shipNumber = splitPosition[1]
+        gameboard.matrix[shipLetter][shipNumber] = 'ship'
+    }
+
+    gameboard.allShips.push(newShip)
+}
+
+function receiveAttack(pos, ship, gameboard) {
+    const coord = pos.split('')
+
+    if (ship.allPositions.includes(pos)) {
+        ship.hit(pos)
+        gameboard.matrix[coord[0]][coord[1]] = 'ship-hit'
+    } else {
+        gameboard.matrix[coord[0]][coord[1]] = 'missed'
+    }
+}
+
+function allSunk(gameboard) {
+    const sunkShips = []
+    for (s of gameboard.allShips) {
+        if (s.hitPositions.length === s.allPositions.length) {
+            sunkShips.push('sunk-ship')
+        }
+    }
+    return sunkShips.length === gameboard.allShips.length
 }
 
 module.exports = {
-    gameboardFactory
+    gameboardFactory,
+    addShip,
+    receiveAttack,
+    allSunk
 }
