@@ -14,8 +14,16 @@ function gameboardFactory (rows, cols) {
 
     const allShips = []
 
+    // TODO - randomize ship generation
+    //
+    // allShips.addShip(newShip)
+    // function randomizeAllShips() {
+    
+    // }    
+
     return { size, rows, colsNum, matrix, allShips }
 }
+
 
 function addShip(newShip, gameboard) {
     let splitPosition

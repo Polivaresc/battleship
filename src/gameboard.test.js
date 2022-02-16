@@ -61,21 +61,6 @@ test('reports if all the ships are sunk', () => {
     expect(gameboardModule.allSunk(newGameboard)).toBe(true)
 })
 
-test('reports if all the ships are sunk', () => {
-    const newGameboard = gameboard(10, 'J')
-    const newShip1 = ship('B4', 'B4')
-    const newShip2 = ship('A3', 'A3')
-
-    gameboardModule.addShip(newShip1, newGameboard)
-    gameboardModule.addShip(newShip2, newGameboard)
-
-    gameboardModule.receiveAttack('B4', newShip1, newGameboard)
-    expect(gameboardModule.allSunk(newGameboard)).toBe(false)
-
-    gameboardModule.receiveAttack('A3', newShip2, newGameboard)
-    expect(gameboardModule.allSunk(newGameboard)).toBe(true)
-})
-
 test('reports if longer ships are sunk', () => {
     const newGameboard = gameboard(10, 'J')
     const newShip1 = ship('B4', 'B4')
