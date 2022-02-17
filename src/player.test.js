@@ -10,3 +10,4 @@ test('player has its own gameboard', () => {
     const newPlayer = player('Thor')
     expect(newPlayer.gameboard).toBeDefined()
 })
+
