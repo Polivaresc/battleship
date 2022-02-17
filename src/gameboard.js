@@ -1,6 +1,3 @@
-const shipModule = require('./ship')
-const ship = shipModule.shipFactory
-
 function gameboardFactory () {
     const sides = 10
     const size = sides**2
@@ -17,65 +14,57 @@ function gameboardFactory () {
 
     const allShips = []
 
-    // TODO - randomize ship generation
-    //
-    // allShips.addShip(newShip)
-    // function randomizeAllShips() {
+    function addShip(ship) {
+        let splitPosition
+
+        if (validateShipPositions(ship)) {
+            for (p of ship.allPositions) {
+                splitPosition = p.split('')
+                const shipLetter = splitPosition[0]
+                const shipNumber = splitPosition[1]
+                matrix[shipLetter][shipNumber] = 'ship'
+            }
+        
+            allShips.push(ship)
+            return true
+        }
+        return false
+    }
     
-    // }    
-    const pickedPositions = []
-
-    const cols = 'ABCDEFGHIJ'
-    const first_coord = cols[Math.floor(Math.random() * cols.length)]
-    const second_coord = Math.floor(Math.random() * (10 - 1 + 1) + 1)
-    const initial_pos = first_coord + second_coord
-
-    // check if all ship positions exist in matrix
-    // after creating ship push all positions to pickedPositions (then check if new generated initial_pos exist in pickedPos)
-
-    pickedPositions.push(initial_pos)
-
-    console.log(initial_pos)
-
-    return { size, sides, matrix, allShips, initial_pos }
-}
-
-function addShip(newShip, gameboard) {
-    let splitPosition
-    for (p of newShip.allPositions) {
-        splitPosition = p.split('')
-        const shipLetter = splitPosition[0]
-        const shipNumber = splitPosition[1]
-        gameboard.matrix[shipLetter][shipNumber] = 'ship'
-    }
-
-    gameboard.allShips.push(newShip)
-}
-
-function receiveAttack(pos, ship, gameboard) {
-    const coord = pos.split('')
-
-    if (ship.allPositions.includes(pos)) {
-        ship.hit(pos)
-        gameboard.matrix[coord[0]][coord[1]] = 'ship-hit'
-    } else {
-        gameboard.matrix[coord[0]][coord[1]] = 'missed'
-    }
-}
-
-function allSunk(gameboard) {
-    const sunkShips = []
-    for (s of gameboard.allShips) {
-        if (s.hitPositions.length === s.allPositions.length) {
-            sunkShips.push('sunk-ship')
+    function receiveAttack(pos, ship) {
+        const coord = pos.split('')
+    
+        if (ship.allPositions.includes(pos)) {
+            ship.hit(pos)
+            matrix[coord[0]][coord[1]] = 'ship-hit'
+        } else {
+            matrix[coord[0]][coord[1]] = 'missed'
         }
     }
-    return sunkShips.length === gameboard.allShips.length
+    
+    function allSunk() {
+        const sunkShips = []
+        for (s of allShips) {
+            if (s.hitPositions.length === s.allPositions.length) {
+                sunkShips.push('sunk-ship')
+            }
+        }
+        return sunkShips.length === allShips.length
+    }
+
+    function validateShipPositions(ship) {
+        for(p of ship.allPositions) {
+            const splitPos = p.split('')
+            if(matrix[splitPos[0]][splitPos[1]] !== 'empty') {
+                return false
+            }
+        }
+        return true
+    }
+
+    return { size, sides, matrix, allShips, initial_pos, addShip, receiveAttack, allSunk }
 }
 
 module.exports = {
-    gameboardFactory,
-    addShip,
-    receiveAttack,
-    allSunk
+    gameboardFactory
 }

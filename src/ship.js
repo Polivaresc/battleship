@@ -1,7 +1,11 @@
-function shipFactory (initial_pos, len) {
-    const final_pos = calculateFinalPos(initial_pos, len)
+function shipFactory (initial_pos, len, direction = null) {
+    if (!direction) {
+        const dirOptions = ['vertical', 'horizontal']
+        direction = dirOptions[Math.floor(Math.random() * dirOptions.length)]
+    }
 
-    const allPositions = calculateAllPos(initial_pos, final_pos, len)
+    const allPositions = calculateAllPos(initial_pos, len, direction)
+    const final_pos = allPositions[len-1]
 
     const hitPositions = []
     
@@ -20,32 +24,21 @@ function shipFactory (initial_pos, len) {
     return { len, initial_pos, final_pos, hitPositions, allPositions, hit, isSunk }
 }
 
-function calculateFinalPos(initial_pos, len) {
-    const dirOptions = ['vertical', 'horizontal']
-    const direction = dirOptions[Math.floor(Math.random() * dirOptions.length)]
-    const start = initial_pos.split('')
-    let end
-    if (direction === 'horizontal') {
-        end = start[0].charCodeAt(0) + len - 1
-        return String.fromCharCode(end) + start[1]
-    } else if (direction === 'vertical') {
-        end = parseInt(start[1]) + len - 1
-        return start[0] + end
-    }    
-}
 
+    // TODO - randomize ship generation
+    //
+    // allShips.addShip(newShip)
+    // function randomizeAllShips() {
+    
+    // }    
 
-// function calculateLength(initial_pos, final_pos) {
-//     const start = initial_pos.split('')
-//     const end = final_pos.split('')
-//     return (end[0].charCodeAt(0) - start[0].charCodeAt(0)) + (end[1] - start[1]) + 1
-// }
+    // const cols = 'ABCDEFGHIJ'
+    // const first_coord = cols[Math.floor(Math.random() * cols.length)]
+    // const second_coord = Math.floor(Math.random() * (10 - 1 + 1) + 1)
+    // const initial_pos = first_coord + second_coord
+    // console.log(initial_pos)
 
-function calculateAllPos(initial_pos, final_pos, len) {
-    const start = initial_pos.split('')
-    const end = final_pos.split('')
-
-    const direction = end[1] - start[1] > 0 ? 'vertical' : 'horizontal'
+function calculateAllPos(initial_pos, len, direction) {
     const allPositions = []
 
     allPositions.push(initial_pos)
