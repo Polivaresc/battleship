@@ -1,13 +1,16 @@
-function gameboardFactory (rows, cols) {
-    const colsNum = cols.charCodeAt(0) - 65 + 1 // Convert uppercase letter to number
-    const size = rows*colsNum
+const shipModule = require('./ship')
+const ship = shipModule.shipFactory
+
+function gameboardFactory () {
+    const sides = 10
+    const size = sides**2
 
     let matrix = {}
-    for (let i = 0; i < colsNum; i++) {
-        const letter = String.fromCharCode(65 + i)
+    for (let i = 0; i < sides; i++) {
+        const letter = String.fromCharCode(65 + i) // Convert number of sides to uppercase letters
         matrix[letter] = {}
 
-        for (let j = 1; j <= rows; j++) {
+        for (let j = 1; j <= sides; j++) {
             matrix[letter][j] = 'empty'
         }
     }
@@ -20,10 +23,22 @@ function gameboardFactory (rows, cols) {
     // function randomizeAllShips() {
     
     // }    
+    const pickedPositions = []
 
-    return { size, rows, colsNum, matrix, allShips }
+    const cols = 'ABCDEFGHIJ'
+    const first_coord = cols[Math.floor(Math.random() * cols.length)]
+    const second_coord = Math.floor(Math.random() * (10 - 1 + 1) + 1)
+    const initial_pos = first_coord + second_coord
+
+    // check if all ship positions exist in matrix
+    // after creating ship push all positions to pickedPositions (then check if new generated initial_pos exist in pickedPos)
+
+    pickedPositions.push(initial_pos)
+
+    console.log(initial_pos)
+
+    return { size, sides, matrix, allShips, initial_pos }
 }
-
 
 function addShip(newShip, gameboard) {
     let splitPosition
