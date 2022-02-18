@@ -21,7 +21,7 @@ test('receiveAttack determines if hit ship or not', () => {
     const newGameboard = gameboard()
     const newShip = ship(4, 'A1')
     newGameboard.addShip(newShip)
-    newGameboard.receiveAttack('B2', newShip)
+    newGameboard.receiveAttack('B2')
     expect(newShip.hitPositions.includes('A2')).toBe(false)
 })
 
@@ -29,7 +29,7 @@ test('receiveAttack hits ship & updates matrix', () => {
     const newGameboard = gameboard()
     const newShip = ship(4, 'A1', 'vertical')
     newGameboard.addShip(newShip)
-    newGameboard.receiveAttack('A2', newShip)
+    newGameboard.receiveAttack('A2')
     expect(newShip.hitPositions.includes('A2')).toBe(true)
     expect(newGameboard.matrix['A']['2']).toBe('ship-hit')
 })
@@ -38,7 +38,7 @@ test('receiveAttack misses hit & updates matrix', () => {
     const newGameboard = gameboard()
     const newShip = ship(4, 'A1', 'horizontal')
     newGameboard.addShip(newShip)
-    newGameboard.receiveAttack('A2', newShip)
+    newGameboard.receiveAttack('A2')
     expect(newGameboard.matrix['A']['2']).toBe('missed')
 })
 
@@ -50,10 +50,10 @@ test('reports if all the ships are sunk', () => {
     newGameboard.addShip(newShip1)
     newGameboard.addShip(newShip2)
 
-    newGameboard.receiveAttack('B4', newShip1)
+    newGameboard.receiveAttack('B4')
     expect(newGameboard.allSunk()).toBe(false)
 
-    newGameboard.receiveAttack('C3', newShip2)
+    newGameboard.receiveAttack('C3')
     expect(newGameboard.allSunk()).toBe(true)
 })
 
@@ -63,10 +63,10 @@ test('reports if longer ships are sunk', () => {
 
     newGameboard.addShip(newShip)
 
-    newGameboard.receiveAttack('A3', newShip)
+    newGameboard.receiveAttack('A3')
     expect(newGameboard.allSunk()).toBe(false)
 
-    newGameboard.receiveAttack('A4', newShip)
+    newGameboard.receiveAttack('A4')
     expect(newGameboard.allSunk()).toBe(true)
 })
 

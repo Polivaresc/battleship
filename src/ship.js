@@ -71,15 +71,6 @@ function shipFactory (len, initial_pos = null, direction = null) {
     return { len, initial_pos, final_pos, hitPositions, allPositions, hit, isSunk, splitPos }
 }
 
-
-    // TODO - randomize ship generation
-    //
-    // allShips.addShip(newShip)
-    // function randomizeAllShips() {
-    
-    // }    
-
-
 module.exports = {
     shipFactory
 }

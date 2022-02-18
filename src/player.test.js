@@ -25,7 +25,23 @@ test('player attacks the other players gameboard', () => {
     const newPlayer = player('Odin')
     const computer = player('Computer', true)
     const prevMatrix = Object.assign({}, computer.gameboard.matrix)
-    newPlayer.attack('C2', computer)
+    newPlayer.attack(computer, 'C2')
     const currentMatrix = computer.gameboard.matrix
     expect(currentMatrix !== prevMatrix).toBe(true)
+})
+
+test('computer can make automatic attack', () => {
+    const newPlayer = player('Odin')
+    const computer = player('Computer', true)
+    const prevMatrix = Object.assign({}, newPlayer.gameboard.matrix)
+    computer.attack(newPlayer)
+    const currentMatrix = newPlayer.gameboard.matrix
+    expect(currentMatrix !== prevMatrix).toBe(true)
+})
+
+test('player cannot make invalid attacks', () => {
+    const newPlayer = player('Odin')
+    const computer = player('Computer', true)
+    newPlayer.attack(computer, 'C2')
+    expect(() => newPlayer.attack(computer, 'C2')).toThrow('This position is already hit')
 })

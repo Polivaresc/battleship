@@ -82,15 +82,6 @@ function gameboardFactory () {
             matrix[coord[0]][coord[1]] = 'missed'
             return false
         }
-
-        // const coord = ship.splitPos(pos)
-
-        // if (ship.allPositions.includes(pos)) {
-        //     ship.hit(pos)
-        //     matrix[coord[0]][coord[1]] = 'ship-hit'
-        // } else {
-        //     matrix[coord[0]][coord[1]] = 'missed'
-        // }
     }
     
     function allSunk() {
