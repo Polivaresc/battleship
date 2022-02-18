@@ -78,3 +78,21 @@ test('validates initial position when adding to gameboard', () => {
     const newShip2 = ship(3, 'C1', 'vertical')
     expect(newGameboard.addShip(newShip2)).toBe(false)
 })
+
+test('validates existing letter in matrix', () => {
+    const newGameboard = gameboard()
+    const newShip = ship(3, 'Z1')
+    expect(newGameboard.addShip(newShip)).toBe(false)
+})
+
+test('validates existing number in matrix', () => {
+    const newGameboard = gameboard()
+    const newShip = ship(3, 'A12')
+    expect(newGameboard.addShip(newShip)).toBe(false)
+})
+
+test('validates existing letter AND number', () => {
+    const newGameboard = gameboard()
+    const newShip = ship(3, 'Z12')
+    expect(newGameboard.addShip(newShip)).toBe(false)
+})

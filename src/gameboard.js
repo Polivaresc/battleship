@@ -17,7 +17,7 @@ function gameboardFactory () {
     function addShip(ship) {
         let splitPosition
 
-        if (validateShipPositions(ship)) {
+        if (validateMatrixPositions(ship) && validateShipPositions(ship)) {
             for (p of ship.allPositions) {
                 splitPosition = ship.splitPos(p)
                 const shipLetter = splitPosition[0]
@@ -56,6 +56,16 @@ function gameboardFactory () {
         for(p of ship.allPositions) {
             const splitPosition = ship.splitPos(p)
             if(matrix[splitPosition[0]][splitPosition[1]] !== 'empty') {
+                return false
+            }
+        }
+        return true
+    }
+
+    function validateMatrixPositions(ship) {
+        for(p of ship.allPositions) {
+            const splitPosition = ship.splitPos(p)
+            if(!matrix[splitPosition[0]]) {
                 return false
             }
         }
