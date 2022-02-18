@@ -19,7 +19,7 @@ function gameboardFactory () {
 
         if (validateShipPositions(ship)) {
             for (p of ship.allPositions) {
-                splitPosition = p.split('')
+                splitPosition = ship.splitPos(p)
                 const shipLetter = splitPosition[0]
                 const shipNumber = splitPosition[1]
                 matrix[shipLetter][shipNumber] = 'ship'
@@ -32,7 +32,7 @@ function gameboardFactory () {
     }
     
     function receiveAttack(pos, ship) {
-        const coord = pos.split('')
+        const coord = ship.splitPos(pos)
     
         if (ship.allPositions.includes(pos)) {
             ship.hit(pos)
@@ -54,15 +54,15 @@ function gameboardFactory () {
 
     function validateShipPositions(ship) {
         for(p of ship.allPositions) {
-            const splitPos = p.split('')
-            if(matrix[splitPos[0]][splitPos[1]] !== 'empty') {
+            const splitPosition = ship.splitPos(p)
+            if(matrix[splitPosition[0]][splitPosition[1]] !== 'empty') {
                 return false
             }
         }
         return true
     }
 
-    return { size, sides, matrix, allShips, initial_pos, addShip, receiveAttack, allSunk }
+    return { size, sides, matrix, allShips, addShip, receiveAttack, allSunk }
 }
 
 module.exports = {

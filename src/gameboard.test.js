@@ -11,7 +11,7 @@ test('creates a 10x10 gameboard', () => {
 
 test('places ships at specific coordinates', () => {
     const newGameboard = gameboard()
-    const newShip = ship('A1', 4)
+    const newShip = ship(4, 'A1')
     newGameboard.addShip(newShip)
     expect(newGameboard.matrix['A']['1']).toBe('ship')
     expect(newGameboard.matrix['F']['7']).toBe('empty')
@@ -19,7 +19,7 @@ test('places ships at specific coordinates', () => {
 
 test('receiveAttack determines if hit ship or not', () => {
     const newGameboard = gameboard()
-    const newShip = ship('A1', 4)
+    const newShip = ship(4, 'A1')
     newGameboard.addShip(newShip)
     newGameboard.receiveAttack('B2', newShip)
     expect(newShip.hitPositions.includes('A2')).toBe(false)
@@ -27,7 +27,7 @@ test('receiveAttack determines if hit ship or not', () => {
 
 test('receiveAttack hits ship & updates matrix', () => {
     const newGameboard = gameboard()
-    const newShip = ship('A1', 4, 'vertical')
+    const newShip = ship(4, 'A1', 'vertical')
     newGameboard.addShip(newShip)
     newGameboard.receiveAttack('A2', newShip)
     expect(newShip.hitPositions.includes('A2')).toBe(true)
@@ -36,7 +36,7 @@ test('receiveAttack hits ship & updates matrix', () => {
 
 test('receiveAttack misses hit & updates matrix', () => {
     const newGameboard = gameboard()
-    const newShip = ship('A1', 4, 'horizontal')
+    const newShip = ship(4, 'A1', 'horizontal')
     newGameboard.addShip(newShip)
     newGameboard.receiveAttack('A2', newShip)
     expect(newGameboard.matrix['A']['2']).toBe('missed')
@@ -44,8 +44,8 @@ test('receiveAttack misses hit & updates matrix', () => {
 
 test('reports if all the ships are sunk', () => {
     const newGameboard = gameboard()
-    const newShip1 = ship('B4', 1)
-    const newShip2 = ship('C3', 1)
+    const newShip1 = ship(1, 'B4')
+    const newShip2 = ship(1, 'C3')
 
     newGameboard.addShip(newShip1)
     newGameboard.addShip(newShip2)
@@ -59,7 +59,7 @@ test('reports if all the ships are sunk', () => {
 
 test('reports if longer ships are sunk', () => {
     const newGameboard = gameboard()
-    const newShip = ship('A3', 2, 'vertical')
+    const newShip = ship(2, 'A3', 'vertical')
 
     newGameboard.addShip(newShip)
 
@@ -70,11 +70,11 @@ test('reports if longer ships are sunk', () => {
     expect(newGameboard.allSunk()).toBe(true)
 })
 
-test('creates random ship initial position', () => {
+test('validates initial position when adding to gameboard', () => {
     const newGameboard = gameboard()
-    const newShip = ship('B2', 3, 'horizontal')
-    expect(newGameboard.addShip(newShip)).toBe(true)
+    const newShip1 = ship(3, 'B2', 'horizontal')
+    expect(newGameboard.addShip(newShip1)).toBe(true)
     
-    const newShip2 = ship('C1', 3, 'vertical')
+    const newShip2 = ship(3, 'C1', 'vertical')
     expect(newGameboard.addShip(newShip2)).toBe(false)
 })
