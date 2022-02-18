@@ -1,16 +1,20 @@
 const gameboardModule = require('./gameboard')
 
 function playerFactory (name, isComputer = false) {
-    const gameboard = gameboardModule.gameboardFactory(10, 'J')
-    const current = !isComputer
+    let current = !isComputer
+    const gameboard = gameboardModule.gameboardFactory()
+    gameboard.initializeShips()
 
-    // gameboard.randomizeAllShips()
+    function attack(pos, opponent) {
+        const hit = opponent.gameboard.receiveAttack(pos)
+        current = hit ? current : !current
+        opponent.current = !hit
+    }
 
-    
-
-    return { name, isComputer, current, gameboard }
+    return { name, isComputer, current, gameboard, attack }
 }
 
 module.exports = {
     playerFactory
 }
+

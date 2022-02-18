@@ -26,7 +26,7 @@ function gameboardFactory () {
     function createShips(len, q) {
         for(let i = 0; i < q; i++) {
             const newShip = ship(len)
-            !addShip(newShip) ? i-- : addShip(newShip)
+            addShip(newShip) ? addShip(newShip) : i-- 
         }
     }
 
@@ -67,15 +67,30 @@ function gameboardFactory () {
         return true
     }
     
-    function receiveAttack(pos, ship) {
-        const coord = ship.splitPos(pos)
-    
-        if (ship.allPositions.includes(pos)) {
-            ship.hit(pos)
-            matrix[coord[0]][coord[1]] = 'ship-hit'
+    function receiveAttack(pos) {
+        const coord = pos.match(/[a-zA-Z]+|[0-9]+/g)
+
+        if (matrix[coord[0]][coord[1]] === 'ship') {
+            for (s of allShips) {
+                if (s.allPositions.includes(pos)) {
+                    s.hit(pos)
+                    matrix[coord[0]][coord[1]] = 'ship-hit'
+                    return true
+                }
+            }
         } else {
             matrix[coord[0]][coord[1]] = 'missed'
+            return false
         }
+
+        // const coord = ship.splitPos(pos)
+
+        // if (ship.allPositions.includes(pos)) {
+        //     ship.hit(pos)
+        //     matrix[coord[0]][coord[1]] = 'ship-hit'
+        // } else {
+        //     matrix[coord[0]][coord[1]] = 'missed'
+        // }
     }
     
     function allSunk() {
