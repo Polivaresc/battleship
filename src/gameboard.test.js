@@ -96,3 +96,20 @@ test('validates existing letter AND number', () => {
     const newShip = ship(3, 'Z12')
     expect(newGameboard.addShip(newShip)).toBe(false)
 })
+
+test('initialize ships create 10 ships', () => {
+    const newGameboard = gameboard()
+    newGameboard.initializeShips()
+    expect(newGameboard.allShips.length).toBe(10)
+})
+
+test('initialize 4 ships(1), 3 ships(2), 2 ships(3) and 1 ship(4)', () => {
+    const newGameboard = gameboard()
+    newGameboard.initializeShips()
+    const allLen = []
+    newGameboard.allShips.forEach(s => allLen.push(s.len))
+    expect(allLen.filter(a => a === 1).length).toBe(4)
+    expect(allLen.filter(a => a === 2).length).toBe(3)
+    expect(allLen.filter(a => a === 3).length).toBe(2)
+    expect(allLen.filter(a => a === 4).length).toBe(1)
+})

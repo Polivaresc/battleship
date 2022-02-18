@@ -1,6 +1,10 @@
+const shipModule = require('./ship')
+const ship = shipModule.shipFactory
+
 function gameboardFactory () {
     const sides = 10
     const size = sides**2
+    const allShips = []
 
     let matrix = {}
     for (let i = 0; i < sides; i++) {
@@ -12,7 +16,19 @@ function gameboardFactory () {
         }
     }
 
-    const allShips = []
+    function initializeShips() {
+        createShips(1, 4)
+        createShips(2, 3)
+        createShips(3, 2)
+        createShips(4, 1)
+    }
+
+    function createShips(len, q) {
+        for(let i = 0; i < q; i++) {
+            const newShip = ship(len)
+            !addShip(newShip) ? i-- : addShip(newShip)
+        }
+    }
 
     function addShip(ship) {
         let splitPosition
@@ -29,6 +45,26 @@ function gameboardFactory () {
             return true
         }
         return false
+    }
+
+    function validateShipPositions(ship) {
+        for(p of ship.allPositions) {
+            const splitPosition = ship.splitPos(p)
+            if(matrix[splitPosition[0]][splitPosition[1]] !== 'empty') {
+                return false
+            }
+        }
+        return true
+    }
+
+    function validateMatrixPositions(ship) {
+        for(p of ship.allPositions) {
+            const splitPosition = ship.splitPos(p)
+            if(!matrix[splitPosition[0]]) {
+                return false
+            }
+        }
+        return true
     }
     
     function receiveAttack(pos, ship) {
@@ -52,27 +88,8 @@ function gameboardFactory () {
         return sunkShips.length === allShips.length
     }
 
-    function validateShipPositions(ship) {
-        for(p of ship.allPositions) {
-            const splitPosition = ship.splitPos(p)
-            if(matrix[splitPosition[0]][splitPosition[1]] !== 'empty') {
-                return false
-            }
-        }
-        return true
-    }
 
-    function validateMatrixPositions(ship) {
-        for(p of ship.allPositions) {
-            const splitPosition = ship.splitPos(p)
-            if(!matrix[splitPosition[0]]) {
-                return false
-            }
-        }
-        return true
-    }
-
-    return { size, sides, matrix, allShips, addShip, receiveAttack, allSunk }
+    return { size, sides, matrix, allShips, addShip, receiveAttack, allSunk, initializeShips }
 }
 
 module.exports = {
