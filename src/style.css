@@ -1,0 +1,48 @@
+body {
+    font-family: Helvetica, sans-serif;
+    display: flex;
+    margin: 0;
+    background-color: rgb(2, 10, 31);
+    justify-content: center;
+}
+
+h2 {
+    color: white;
+}
+
+#container {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin-top: 100px;
+}
+
+#player-gameboard, #computer-gameboard {
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    width: fit-content;
+    border: 3px solid white;
+}
+
+.cell {
+    background-color: rgb(43, 152, 241);
+    border: 1px solid rgb(110, 184, 245);
+    height: 35px;
+    width: 35px;
+}
+
+.ship-cell {
+    background-color: rgb(27, 28, 36);
+}
+
+.computer-cell:hover {
+    cursor: pointer;
+}
+
+/* .missed-cell {
+
+}
+
+.hit-cell {
+
+} */

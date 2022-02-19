@@ -4,6 +4,9 @@ module.exports = {
   mode: "development",
   entry: "./src/index.js",
   devtool: "inline-source-map",
+  devServer: {
+    static: './dist',
+  },
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
@@ -15,19 +18,13 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
     ],
-    loaders: [
-        {exclude: ['node_modules'], loader: 'babel', test: /\.jsx?$/},
-        {loader: 'style-loader!css-loader', test: /\.css$/},
-        {loader: 'url-loader', test: /\.gif$/},
-        {loader: 'file-loader', test: /\.(ttf|eot|svg)$/},
-    ],
   },
   resolve: {
     alias: {
       config$: './configs/app-config.js',
       react: './vendor/react-master',
     },
-    extensions: ['', 'js', 'jsx'],
+    extensions: ['', '.js', '.jsx'],
     modules: [
       'node_modules',
       'bower_components',
