@@ -1,7 +1,6 @@
 const gameboardModule = require('./gameboard')
 
 function playerFactory (name, isComputer = false) {
-    let current = !isComputer
     const gameboard = gameboardModule.gameboardFactory()
     gameboard.initializeShips()
 
@@ -11,9 +10,7 @@ function playerFactory (name, isComputer = false) {
         }
         const valid = validateAttack(opponent, pos) 
         if(valid) {
-            const hit = opponent.gameboard.receiveAttack(pos)
-            current = hit ? current : !current
-            opponent.current = !hit
+            return opponent.gameboard.receiveAttack(pos)
         } else {
             throw Error('This position is already hit')
         }
@@ -37,7 +34,7 @@ function playerFactory (name, isComputer = false) {
         }
     }
 
-    return { name, isComputer, current, gameboard, attack }
+    return { name, isComputer, gameboard, attack }
 }
 
 module.exports = {

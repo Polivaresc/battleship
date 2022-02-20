@@ -25,10 +25,14 @@ h2 {
 }
 
 .cell {
+    display: flex;
     background-color: rgb(43, 152, 241);
     border: 1px solid rgb(110, 184, 245);
     height: 35px;
     width: 35px;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
 }
 
 .ship-cell {
@@ -39,10 +43,12 @@ h2 {
     cursor: pointer;
 }
 
-/* .missed-cell {
-
+.missed-cell {
+    background-color: rgb(189, 219, 243);
+    color: rgb(27, 28, 36);
 }
 
 .hit-cell {
-
-} */
+    background-color: rgb(27, 28, 36);
+    color: rgb(189, 219, 243);
+}
