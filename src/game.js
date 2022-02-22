@@ -12,9 +12,11 @@ function game () {
 
     let currentPlayer = user
 
-    const opponentGb = [...document.querySelector('#computer-gameboard').childNodes]
+    const computerGb = document.querySelector('#computer-gameboard')
+    const computerCells = [...computerGb.childNodes]
+    const userGb = document.querySelector('#player-gameboard')
 
-    opponentGb.forEach(c => c.addEventListener('click', (e) => {
+    computerCells.forEach(c => c.addEventListener('click', (e) => {
         if(currentPlayer === user) {
             userTurn(e)
         }
@@ -30,7 +32,11 @@ function game () {
             if(!hit) {
                 setCurrentPlayer(computer)
                 computerTurn()
-            }    
+            } else {
+                if (computer.gameboard.allSunk()) {
+                    endGame(user)
+                }
+            }
         } catch (error) {
             alert(error)
         }
@@ -38,24 +44,39 @@ function game () {
     }
 
     function computerTurn() {
-            sleep(500).then(() => {
-                try {
-                    const hit = computer.attack(user)
-                    styleCells(user)
-                    if (hit) {
-                        return computerTurn()
-                    } else {
-                        setCurrentPlayer(user)
+        sleep(750).then(() => {
+            try {
+                const hit = computer.attack(user)
+                styleCells(user)
+                if (hit) {
+                    if(user.gameboard.allSunk()) {
+                        endGame(computer)
                     }
-                } catch (error) {
                     return computerTurn()
+                } else {
+                    setCurrentPlayer(user)
                 }
-            })
+            } catch (error) {
+                return computerTurn()
+            }
+        })
         return    
     }
 
     function setCurrentPlayer(player) {
         currentPlayer = player
+        currentGameboard(currentPlayer, players)
+    }
+
+    function currentGameboard(currentPlayer, players) {
+        const opponent = players.find(p => p !== currentPlayer)
+        if(opponent.isComputer) {
+            computerGb.classList.remove('current-gb')
+            userGb.classList.add('current-gb')
+        } else {
+            userGb.classList.remove('current-gb')
+            computerGb.classList.add('current-gb')
+        }
     }
 
 }
@@ -124,6 +145,25 @@ function styleCells(player) {
                     break;
             }
         }
+    }
+}
+
+function endGame(winner) {
+    const modal = document.querySelector('.modal')
+    modal.style.display = 'flex'
+
+    const message = document.querySelector('#end-message')
+
+    const newGameButton = document.querySelector('#ok-button')
+    newGameButton.addEventListener('click', () => {
+        modal.style.display = 'none'
+        location.reload()
+    })
+
+    if(winner.isComputer) {
+        message.textContent = 'Game Over!'
+    } else {
+        message.textContent = 'You Win!'
     }
 }
 

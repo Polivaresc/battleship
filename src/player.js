@@ -12,7 +12,11 @@ function playerFactory (name, isComputer = false) {
         if(valid) {
             return opponent.gameboard.receiveAttack(pos)
         } else {
-            throw Error('This position is already hit')
+            if(!opponent.isComputer) {
+                attack(opponent, pos = null)
+            } else {
+                throw Error('This position is already hit')
+            }
         }
     }
 
