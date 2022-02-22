@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
   mode: "development",
   entry: "./src/index.js",
-  devtool: "inline-source-map",
+  // devtool: "inline-source-map",
   devServer: {
     static: './dist',
   },
@@ -19,17 +19,17 @@ module.exports = {
       },
     ],
   },
-  resolve: {
-    alias: {
-      config$: './configs/app-config.js',
-      react: './vendor/react-master',
-    },
-    extensions: ['', '.js', '.jsx'],
-    modules: [
-      'node_modules',
-      'bower_components',
-      'shared',
-      '/shared/vendor/modules',
-    ],
-  },
+  // resolve: {
+  //   alias: {
+  //     config$: './configs/app-config.js',
+  //     react: './vendor/react-master',
+  //   },
+  //   extensions: ['', '.js', '.jsx'],
+  //   modules: [
+  //     'node_modules',
+  //     'bower_components',
+  //     'shared',
+  //     '/shared/vendor/modules',
+  //   ],
+  // },
 };
