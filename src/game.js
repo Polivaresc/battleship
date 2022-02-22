@@ -160,10 +160,10 @@ function endGame(winner) {
         location.reload()
     })
 
-    if(winner.isComputer) {
-        message.textContent = 'Game Over!'
-    } else {
+    if(!winner.isComputer) {
         message.textContent = 'You Win!'
+    } else {
+        message.textContent = 'Game Over!'
     }
 }
 
